@@ -1,0 +1,6 @@
+{
+  "name": "JARVIS INTELLIGENCE OS 3.1 PRO",
+  "description": "Official flagship sales platform for JARVIS INTELLIGENCE OS 3.1 PRO - Advanced Android AI Voice Assistant and Automation Platform. Engineered by ABHINAV ANAND.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

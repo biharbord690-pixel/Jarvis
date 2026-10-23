@@ -1,0 +1,173 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered or authenticated customer profile",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "User UID matching auth.uid",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address",
+          "maxLength": 256
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User full name",
+          "maxLength": 128
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "User avatar URL",
+          "maxLength": 512
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of user creation",
+          "maxLength": 64
+        }
+      },
+      "required": ["id", "email"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Jarvis 49rs order and purchase record",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique internal order ID",
+          "maxLength": 64
+        },
+        "orderNumber": {
+          "type": "string",
+          "description": "Public readable order number",
+          "maxLength": 64
+        },
+        "customerName": {
+          "type": "string",
+          "description": "Customer full name",
+          "maxLength": 128
+        },
+        "customerEmail": {
+          "type": "string",
+          "format": "email",
+          "description": "Customer email address",
+          "maxLength": 256
+        },
+        "customerPhone": {
+          "type": "string",
+          "description": "Customer phone number",
+          "maxLength": 32
+        },
+        "productId": {
+          "type": "string",
+          "description": "Product ID e.g. jarvis-apk-pro",
+          "maxLength": 64
+        },
+        "productName": {
+          "type": "string",
+          "description": "Product title e.g. JARVIS AI Mobile Pro",
+          "maxLength": 128
+        },
+        "productVersion": {
+          "type": "string",
+          "description": "Product version e.g. 3.1.2-PRO",
+          "maxLength": 32
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount in paise (4900 for 49 INR)"
+        },
+        "currency": {
+          "type": "string",
+          "description": "Currency code e.g. INR",
+          "maxLength": 8
+        },
+        "status": {
+          "type": "string",
+          "description": "Payment and order status",
+          "enum": ["created", "paid", "failed", "refunded"]
+        },
+        "razorpayOrderId": {
+          "type": "string",
+          "description": "Razorpay order ID",
+          "maxLength": 128
+        },
+        "razorpayPaymentId": {
+          "type": "string",
+          "description": "Razorpay payment ID upon success",
+          "maxLength": 128
+        },
+        "razorpaySignature": {
+          "type": "string",
+          "description": "Cryptographic payment signature",
+          "maxLength": 256
+        },
+        "licenseKey": {
+          "type": "string",
+          "description": "Generated license key for the customer",
+          "maxLength": 64
+        },
+        "userId": {
+          "type": "string",
+          "description": "Associated Firebase Auth UID if authenticated",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of creation",
+          "maxLength": 64
+        },
+        "paidAt": {
+          "type": "string",
+          "description": "ISO timestamp of successful payment",
+          "maxLength": 64
+        }
+      },
+      "required": ["id", "customerEmail", "amount", "status", "licenseKey"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Administrator role mapping document",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Firebase Auth UID or email of the admin",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "description": "Admin email",
+          "maxLength": 256
+        },
+        "role": {
+          "type": "string",
+          "description": "Admin role",
+          "enum": ["superadmin", "admin"]
+        }
+      },
+      "required": ["id", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile collection"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Jarvis purchase orders and payment confirmations"
+    },
+    "/admins/{adminId}": {
+      "schema": "Admin",
+      "description": "Administrator access control records"
+    }
+  }
+}
